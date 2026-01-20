@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <title>Bookstore Login</title>
+</head>
+
+<body class="bg-light">
+
+
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+        <div class="col-md-4">
+
+            <div class="card shadow p-4">
+                <h3 class="text-center mb-4">📚 Daisy's Bookstore</h3>
+
+                <form method="POST">
+                    <div class="mb-3">
+                        <input type="text" name="username"
+                               class="form-control"
+                               placeholder="Username"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="password" name="password"
+                               class="form-control"
+                               placeholder="Password"
+                               required>
+                    </div>
+
+                    <button class="btn btn-primary w-100">
+                        Login
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
