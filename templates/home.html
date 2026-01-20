@@ -1,50 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bookstore Home</title>
+    <title>Bookstore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 
-<h2>Welcome {{ user }}</h2>
+<nav class="navbar navbar-dark bg-dark px-3">
+    <span class="navbar-brand">📚 Daisy's Bookstore</span>
+    <a href="/logout" class="btn btn-outline-light">Logout</a>
+</nav>
 
-<h3>Available Books</h3>
+<div class="container mt-4">
+    <h4>Welcome, {{ user }}</h4>
 
-<table border="1" cellpadding="10">
-    <tr>
-    <th>Title</th>
-    <th>Author</th>
-    <th>Price</th>
-    <th>Action</th>
-</tr>
+    <div class="card p-3 mt-3 shadow-sm">
+        <h5>Add New Book</h5>
+        <form method="POST" action="/add_book" class="row g-3">
+            <div class="col-md-4">
+                <input type="text" name="title" class="form-control" placeholder="Book Title" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="author" class="form-control" placeholder="Author" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="price" class="form-control" placeholder="Price" required>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success w-100">Add</button>
+            </div>
+        </form>
+    </div>
 
-
-   {% for book in books %}
-<tr>
-    <td>{{ book.title }}</td>
-    <td>{{ book.author }}</td>
-    <td>₹{{ book.price }}</td>
-    <td>
-        <a href="/delete_book/{{ book.id }}">Delete</a>
-    </td>
-</tr>
-{% endfor %}
-
-    
-</table>
-
-<h3>Add New Book</h3>
-
-<form method="POST" action="/add_book">
-    <input type="text" name="title" placeholder="Book Title" required><br><br>
-    <input type="text" name="author" placeholder="Author" required><br><br>
-    <input type="number" name="price" placeholder="Price" required><br><br>
-
-    <button type="submit">Add Book</button>
-</form>
-
-
-<br>
-<a href="/logout">Logout</a>
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header">Available Books</div>
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Price (₹)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.price }}</td>
+                    <td>
+                        <a href="/delete_book/{{ book.id }}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>
