@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 app = Flask(__name__)
 app.secret_key = "bookstore_secret"
@@ -19,10 +21,11 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT
 )
 """)
+hashed_password = generate_password_hash('admin123')
 conn.execute("""
 INSERT OR IGNORE INTO users (id, username, password)
-VALUES (1, 'admin', 'admin123')
-""")
+VALUES (1, 'admin', ?)
+""",(hashed_password,))
 conn.commit()
 conn.close()
 
@@ -53,16 +56,16 @@ def login():
 
         conn = get_db_connection()
         user = conn.execute(
-            "SELECT * FROM users WHERE username=? AND password=?",
-            (username, password)
+            "SELECT * FROM users WHERE username=?",
+            (username,)
         ).fetchone()
         conn.close()
-
-        if user:
+       
+        if user and check_password_hash(user["password"],password):
             session["user"] = username
             return redirect("/home")
         else:
-            return "Invalid username or password"
+            return password
 
     return render_template("login.html")
 
